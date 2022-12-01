@@ -8,7 +8,20 @@ color yellow = color(242, 215, 16);
 //assets
 PImage redBird;
 PImage img;
-int x;
+int x, gy;
+
+
+color pink=#f76ddc;
+
+color black=#000000;
+color white=#ffffff;
+button[] mybuttons;
+boolean mouseReleased;
+boolean waspressed;
+boolean touchingmouse;
+color bkg;
+
+button gravity;
 //fisica
 FWorld world;
 void setup() {
@@ -27,7 +40,7 @@ void setup() {
 void makeWorld() {
   Fisica.init(this);
   world = new FWorld();
-  world.setGravity(0, 900);
+  world.setGravity(0, gy);
 }
 //=====================================================================================================================================
 void makeTopPlatform() {
@@ -76,12 +89,24 @@ void draw() {
     makeBox();
     makeBird();
   }
+  textAlign(CENTER, CENTER);
+  rectMode(CENTER);
+  imageMode(CENTER);
+
+
+
 
   world.step();  //get box2D to calculate all the forces and new positions
   world.draw();  //ask box2D to convert this world to processing screen coordinates and draw
   circle(x, 200, 80);
   if (x>=width) {
     x=-100;
+  }
+  gravity=new button("gravity", 50, 100, 400, 400, blue, green);
+  if (gravity.clicked) {
+    gy=0;
+  } else {
+    gy=900;
   }
 }
 
@@ -118,7 +143,7 @@ void makeBlob() {
 //=====================================================================================================================================
 void makeBox() {
   FBox box = new FBox(25, 100);
-  FBox.attachImage(redBird);
+  box.attachImage(redBird);
   //image(img, 0, 0);
   //image(img, 0, 0, width/2, height/2);
   box.setPosition(random(width), -5);
