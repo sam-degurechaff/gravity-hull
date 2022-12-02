@@ -25,6 +25,10 @@ button gravity;
 //fisica
 FWorld world;
 void setup() {
+  textAlign(CENTER, CENTER);
+  rectMode(CENTER);
+  imageMode(CENTER);
+
   //make window
   fullScreen();
 
@@ -35,6 +39,8 @@ void setup() {
   //add terrain to world
   makeTopPlatform();
   makeBottomPlatform();
+
+  gravity=new button("gravity", 50, 100, 200, 200, blue, green);
 }
 //=====================================================================================================================================
 void makeWorld() {
@@ -79,6 +85,7 @@ void makeBottomPlatform() {
 
 //=====================================================================================================================================
 void draw() {
+  click();
   println("x: " + mouseX + " y: " + mouseY);
   background(blue);
   circle(x, 100, 80);
@@ -89,11 +96,8 @@ void draw() {
     makeBox();
     makeBird();
   }
-  textAlign(CENTER, CENTER);
-  rectMode(CENTER);
-  imageMode(CENTER);
 
-
+  world.setGravity(0, gy);
 
 
   world.step();  //get box2D to calculate all the forces and new positions
@@ -102,10 +106,11 @@ void draw() {
   if (x>=width) {
     x=-100;
   }
-  gravity=new button("gravity", 50, 100, 400, 400, blue, green);
-  if (gravity.clicked) {
+  gravity.show();
+  if (gravity.clicked==true) {
     gy=0;
-  } else {
+  }
+  if (gravity.clicked==false) {
     gy=900;
   }
 }

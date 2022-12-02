@@ -14,7 +14,7 @@ class button {
     highlight=high;
     normal=norm;
     clicked=false;
-    gy=900;
+    
   }
 
   boolean touchingmouse() {
@@ -46,10 +46,10 @@ class button {
   void checkforclick() {
     if (mouseReleased&&touchingmouse() ) {
       clicked=true;
-      gy=900;
+      
     } else {
       clicked=false;
-      gy=0;
+      
     }
   }
 }
