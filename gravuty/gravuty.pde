@@ -8,8 +8,8 @@ color yellow = color(242, 215, 16);
 //assets
 PImage redBird;
 PImage img;
-int x, gy;
-
+int x, gyo, addo, gy2;
+boolean gy,add;
 
 color pink=#f76ddc;
 
@@ -21,7 +21,7 @@ boolean waspressed;
 boolean touchingmouse;
 color bkg;
 
-button gravity;
+button gravity, objadd;
 //fisica
 FWorld world;
 void setup() {
@@ -41,12 +41,13 @@ void setup() {
   makeBottomPlatform();
 
   gravity=new button("gravity", 50, 100, 200, 200, blue, green);
+  objadd=new button("add", 50, 300, 200, 200, blue, green);
 }
 //=====================================================================================================================================
 void makeWorld() {
   Fisica.init(this);
   world = new FWorld();
-  world.setGravity(0, gy);
+  world.setGravity(0, 900);
 }
 //=====================================================================================================================================
 void makeTopPlatform() {
@@ -86,33 +87,41 @@ void makeBottomPlatform() {
 //=====================================================================================================================================
 void draw() {
   click();
-  println("x: " + mouseX + " y: " + mouseY);
+  //println("x: " + mouseX + " y: " + mouseY);
   background(blue);
   circle(x, 100, 80);
   x=x+10;
-  if (frameCount % 20 == 0) {  //Every 20 frames ...
+  if (frameCount % 20 == 0&&add==true) {  //Every 20 frames ...
     makeCircle();
     makeBlob();
     makeBox();
     makeBird();
   }
 
-  world.setGravity(0, gy);
-
-
   world.step();  //get box2D to calculate all the forces and new positions
   world.draw();  //ask box2D to convert this world to processing screen coordinates and draw
+
   circle(x, 200, 80);
   if (x>=width) {
     x=-100;
   }
+
   gravity.show();
-  if (gravity.clicked==true) {
-    gy=0;
+  if (gravity.clicked) {
+    gy=!gy;
   }
-  if (gravity.clicked==false) {
-    gy=900;
+  if (gy==true) {
+    gyo=0;
+  } else {
+    gyo=900;
   }
+  objadd.show();
+  if (objadd.clicked) {
+    add=!add;
+  }
+  if(add==true){}
+  //println(gy, gyo);
+  world.setGravity(0, gyo);
 }
 
 //=====================================================================================================================================
